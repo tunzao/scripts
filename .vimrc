@@ -97,9 +97,10 @@ autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 
 set cursorline              " 突出显示当前行
+set cursorcolumn              " 突出显示当前列
 autocmd InsertLeave * se nocul  " 用浅色高亮当前行  
 autocmd InsertEnter * se cul    " 用浅色高亮当前行 
-:hi CursorLine   cterm=NONE ctermbg=green ctermfg=white guibg=green guifg=white
-:hi CursorColumn cterm=NONE ctermbg=green ctermfg=white guibg=green guifg=white
+:hi CursorLine   cterm=NONE ctermbg=0 guibg=green guifg=white
+:hi CursorColumn cterm=NONE ctermbg=0 guibg=green guifg=white
 set colorcolumn=80
-:hi ColorColumn ctermbg=green guibg=lightgrey
+:hi ColorColumn ctermbg=0 guibg=lightgrey
