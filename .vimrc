@@ -15,6 +15,11 @@ Bundle "tomtom/tcomment_vim"
 Bundle 'maksimr/vim-jsbeautify'
 Bundle 'einars/js-beautify'
 Bundle 'plasticboy/vim-markdown'
+Bundle 'derekwyatt/vim-scala'
+" Bundle 'Valloric/YouCompleteMe'
+Bundle 'python.vim'
+Bundle 'Pydiction'
+
 syntax on
 "配色风格 desert darkblue ron
 colorscheme desert
@@ -104,3 +109,53 @@ autocmd InsertEnter * se cul    " 用浅色高亮当前行
 :hi CursorColumn cterm=NONE ctermbg=0 guibg=green guifg=white
 set colorcolumn=80
 :hi ColorColumn ctermbg=0 guibg=lightgrey
+
+" 显示tab和空格
+set list
+" 设置tab和空格样式
+set lcs=tab:\|\ ,nbsp:%,trail:-
+" 设定行首tab为灰色
+highlight LeaderTab guifg=#666666
+" 匹配行首tab
+match LeaderTab /^\t/
+
+let g:pydiction_location = '~/.vim/bundle/pydiction/complete-dict'
+
+" 括号自动不全
+function! AutoPair(open, close)
+    let line = getline('.')
+    if col('.') > strlen(line) || line[col('.') - 1] == ' '
+    return a:open.a:close."\<ESC>i"
+    else
+    return a:open
+    endif
+    endf
+
+function! ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+    return "\<Right>"
+    else
+    return a:char
+    endif
+    endf
+
+function! SamePair(char)
+    let line = getline('.')
+    if col('.') > strlen(line) || line[col('.') - 1] == ' '
+    return a:char.a:char."\<ESC>i"
+    elseif line[col('.') - 1] == a:char
+    return "\<Right>"
+    else
+    return a:char
+    endif
+    endf
+
+    inoremap ( <c-r>=AutoPair('(', ')')<CR>
+            inoremap ) <c-r>=ClosePair(')')<CR>
+    inoremap { <c-r>=AutoPair('{', '}')<CR>
+        inoremap } <c-r>=ClosePair('}')<CR>
+        inoremap [ <c-r>=AutoPair('[', ']')<CR>
+        inoremap ] <c-r>=ClosePair(']')<CR>
+        inoremap " <c-r>=SamePair('"')<CR>
+        inoremap ' <c-r>=SamePair("'")<CR>
+        inoremap ` <c-r>=SamePair('`')<CR>
