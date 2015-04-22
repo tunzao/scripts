@@ -6,11 +6,13 @@ call vundle#rc()
 
 Bundle "gmarik/vundle"
 Bundle "taglist.vim"
-Bundle "SuperTab"
 Bundle 'jlanzarotta/bufexplorer'
 Bundle "winmanager"
 Bundle "FromtonRouge/OmniCppComplete"
+
 Bundle "ervandew/supertab"
+Bundle "SuperTab"
+
 Bundle "tomtom/tcomment_vim"
 Bundle 'maksimr/vim-jsbeautify'
 Bundle 'einars/js-beautify'
@@ -19,10 +21,12 @@ Bundle 'derekwyatt/vim-scala'
 " Bundle 'Valloric/YouCompleteMe'
 Bundle 'python.vim'
 Bundle 'Pydiction'
+Bundle 'ShowMarks'
 
 syntax on
-"配色风格 desert darkblue ron
-colorscheme desert
+
+"显示行号
+set nu
 
 "设定行距 GUI 界面中生效
 set linespace=4
@@ -32,58 +36,96 @@ set guioptions=gmrLt
 "显示标尺
 set ruler
 
-"自动折行
-"set nowrap
-set wrap
-"按完整单词折行
-set nolinebreak
-"set linebreak
-"行宽（输入时自动插入换行符）
-"set textwidth=80
-set textwidth=0
 
-"允许在 虚空间 内操作 （虚空间:不包含任何文本的空间。如换行符之后）
-"set virtualedit=all
 "禁止在 虚空间 内操作
 set virtualedit=
 
+set smarttab
+"将缩进转换为空格
+set expandtab
 "设定 Tab 键缩进的空格数
 set tabstop=4
-"设定编辑器将多少空格视为一个缩进
 set shiftwidth=4
+
+set autoindent
 set smartindent
-set expandtab
-"将缩进转换为空格
-"set expandtab
-"设定自动缩进(新行与前一行缩进相同)
-"set autoindent
-"set noautoindent
-set cindent
+"自动折行
+set wrap
+"linebreak
+set lbr
+"行宽（输入时自动插入换行符）textwidth
+set tw=100
+
 "插入模式下，“←”如何删除光标前的字符：行首空白、换行符、插入点之前的字符
 set backspace=indent,eol,start
 
 "命令行历史纪录
 set history=500
 
-"禁用增量搜索
+"增量搜索
 set incsearch
-"set noincsearch
 "搜索时忽略大小写
 set ignorecase
-"set noignorecase
+set smartcase
 "高亮显示搜索结果
 set hlsearch
 
-"设定折叠方式
-"set foldmethod=manual
+"Enable filetype plugins
+filetype plugin on
+filetype indent on
 
-"以下字符将被视为单词的一部分 (ASCII)：
-"set iskeyword+=33-47,58-64,91-96,123-128
+"当文件被外部文件修改时自动加载
+set autoread
 
-"显示行号
-set nu
+"快速保存
+nmap <leader>w :w!<cr>
 
-filetype on
+"turn on the wild menu
+set wildmenu
+
+"Set map leader
+let mapleader=","
+let g:mapleader=","
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 配色
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"配色风格 desert darkblue ron
+colorscheme ron
+set background=dark
+
+" Set extra options when running in GUI mode
+if has("gui_running")
+    set guioptions-=T
+    set guioptions+=e
+    set t_Co=256
+    set guitablabel=%M\ %t
+endif
+
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+
+"Use Unix as the standard file type
+set ffs=unix,dos,mac
+
+" Always show the status line
+set laststatus=2
+
+" Format the status line
+set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+
+
 " taglist 配置
 let Tlist_Show_One_File = 1       "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Exit_OnlyWindow = 1     "如果taglist窗口是最后一个窗口，则退出vim
@@ -107,7 +149,7 @@ autocmd InsertLeave * se nocul  " 用浅色高亮当前行
 autocmd InsertEnter * se cul    " 用浅色高亮当前行 
 :hi CursorLine   cterm=NONE ctermbg=0 guibg=green guifg=white
 :hi CursorColumn cterm=NONE ctermbg=0 guibg=green guifg=white
-set colorcolumn=80
+set colorcolumn=100
 :hi ColorColumn ctermbg=0 guibg=lightgrey
 
 " 显示tab和空格
@@ -121,41 +163,6 @@ match LeaderTab /^\t/
 
 let g:pydiction_location = '~/.vim/bundle/pydiction/complete-dict'
 
-" 括号自动不全
-function! AutoPair(open, close)
-    let line = getline('.')
-    if col('.') > strlen(line) || line[col('.') - 1] == ' '
-    return a:open.a:close."\<ESC>i"
-    else
-    return a:open
-    endif
-    endf
-
-function! ClosePair(char)
-    if getline('.')[col('.') - 1] == a:char
-    return "\<Right>"
-    else
-    return a:char
-    endif
-    endf
-
-function! SamePair(char)
-    let line = getline('.')
-    if col('.') > strlen(line) || line[col('.') - 1] == ' '
-    return a:char.a:char."\<ESC>i"
-    elseif line[col('.') - 1] == a:char
-    return "\<Right>"
-    else
-    return a:char
-    endif
-    endf
-
-    inoremap ( <c-r>=AutoPair('(', ')')<CR>
-            inoremap ) <c-r>=ClosePair(')')<CR>
-    inoremap { <c-r>=AutoPair('{', '}')<CR>
-        inoremap } <c-r>=ClosePair('}')<CR>
-        inoremap [ <c-r>=AutoPair('[', ']')<CR>
-        inoremap ] <c-r>=ClosePair(']')<CR>
-        inoremap " <c-r>=SamePair('"')<CR>
-        inoremap ' <c-r>=SamePair("'")<CR>
-        inoremap ` <c-r>=SamePair('`')<CR>
+"source vimrc, 编辑vimrc
+map <silent> <leader>ss :source ~/.vimrc<cr>
+map <silent> <leader>ee :e ~/.vimrc<cr>
