@@ -18,10 +18,16 @@ Bundle 'maksimr/vim-jsbeautify'
 Bundle 'einars/js-beautify'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'derekwyatt/vim-scala'
-" Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe'
 Bundle 'python.vim'
-Bundle 'Pydiction'
-Bundle 'ShowMarks'
+" Bundle 'Pydiction'
+" Bundle 'ShowMarks'
+
+Bundle 'The-NERD-tree'
+
+"Set map leader
+let mapleader=","
+let g:mapleader=","
 
 syntax on
 
@@ -78,14 +84,11 @@ filetype indent on
 set autoread
 
 "快速保存
-nmap <leader>w :w!<cr>
+" nmap <leader>w :w!<cr>
 
 "turn on the wild menu
 set wildmenu
 
-"Set map leader
-let mapleader=","
-let g:mapleader=","
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
@@ -123,18 +126,31 @@ set ffs=unix,dos,mac
 set laststatus=2
 
 " Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 
 
-" taglist 配置
+" Taglist 配置
 let Tlist_Show_One_File = 1       "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Exit_OnlyWindow = 1     "如果taglist窗口是最后一个窗口，则退出vim
 let Tlist_Use_Right_Window = 1    "在右侧窗口中显示taglist窗口 
 
 " winManager配置
-let g:winManagerWindowLayout = "FileExplorer|TagList"
+let g:winManagerWindowLayout = "NERDTree"
+let g:NERDTree_title="[NERDTree]"
 let g:winManagerWidth = 30
-" nmap <silent> wm :WMToggle<cr>
+
+function! NERDTree_Start()
+    exec 'NERDTree'
+endfunction
+
+function! NERDTree_IsValid()
+    return 1
+endfunction
+
+nmap <silent> <leader>wm :WMToggle<cr>
+map <leader>w<leader>f :FirstExplorerWindow<cr> 
+map <leader>w<leader>b :BottomExplorerWindow<cr> 
+map <F2> :WMToggle<cr>
 
 " for js
 autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
@@ -143,14 +159,14 @@ autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 " for css or scss
 autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 
-set cursorline              " 突出显示当前行
-set cursorcolumn              " 突出显示当前列
-autocmd InsertLeave * se nocul  " 用浅色高亮当前行  
-autocmd InsertEnter * se cul    " 用浅色高亮当前行 
-:hi CursorLine   cterm=NONE ctermbg=0 guibg=green guifg=white
-:hi CursorColumn cterm=NONE ctermbg=0 guibg=green guifg=white
-set colorcolumn=100
-:hi ColorColumn ctermbg=0 guibg=lightgrey
+" set cursorline              " 突出显示当前行
+" set cursorcolumn              " 突出显示当前列
+" autocmd InsertLeave * se nocul  " 用浅色高亮当前行
+" autocmd InsertEnter * se cul    " 用浅色高亮当前行
+" :hi CursorLine   cterm=NONE ctermbg=0 guibg=grey guifg=white
+" :hi CursorColumn cterm=NONE ctermbg=0 guibg=grey guifg=white
+" set colorcolumn=100
+" :hi ColorColumn ctermbg=0 guibg=lightgrey
 
 " 显示tab和空格
 set list
