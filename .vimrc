@@ -4,25 +4,35 @@ filetype off
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
-Bundle "gmarik/vundle"
-Bundle "taglist.vim"
+Bundle 'gmarik/vundle'
+Bundle 'taglist.vim'
 Bundle 'jlanzarotta/bufexplorer'
-Bundle "winmanager"
-Bundle "FromtonRouge/OmniCppComplete"
+Bundle 'winmanager'
+Bundle 'FromtonRouge/OmniCppComplete'
 
-Bundle "ervandew/supertab"
-Bundle "SuperTab"
-
-Bundle "tomtom/tcomment_vim"
+Bundle 'ervandew/supertab'
+Bundle 'SuperTab'
+Bundle 'tomtom/tcomment_vim'
 Bundle 'maksimr/vim-jsbeautify'
 Bundle 'einars/js-beautify'
+
+" https://github.com/plasticboy/vim-markdown
+Bundle 'godlygeek/tabular'
 Bundle 'plasticboy/vim-markdown'
+
+
 Bundle 'derekwyatt/vim-scala'
 "Bundle 'Valloric/YouCompleteMe'
-Bundle 'python.vim'
-" Bundle 'Pydiction'
-" Bundle 'ShowMarks'
 
+" python
+Bundle 'python.vim'
+" https://github.com/vim-scripts/Pydiction
+Bundle 'Pydiction'
+
+" surround
+Bundle 'tpope/vim-surround'
+
+" NERD tree
 Bundle 'The-NERD-tree'
 
 "Set map leader
@@ -85,6 +95,8 @@ set autoread
 
 "快速保存
 " nmap <leader>w :w!<cr>
+" 强制退出
+nmap <leader>q :q!<cr>
 
 "turn on the wild menu
 set wildmenu
@@ -136,6 +148,7 @@ let Tlist_Use_Right_Window = 1    "在右侧窗口中显示taglist窗口
 
 " winManager配置
 let g:winManagerWindowLayout = "NERDTree"
+let g:persistentBehaviour = 0
 let g:NERDTree_title="[NERDTree]"
 let g:winManagerWidth = 30
 
@@ -148,8 +161,8 @@ function! NERDTree_IsValid()
 endfunction
 
 nmap <silent> <leader>wm :WMToggle<cr>
-map <leader>w<leader>f :FirstExplorerWindow<cr> 
-map <leader>w<leader>b :BottomExplorerWindow<cr> 
+map <leader>wf :FirstExplorerWindow<cr> 
+map <leader>wb :BottomExplorerWindow<cr> 
 map <F2> :WMToggle<cr>
 
 " for js
@@ -177,8 +190,22 @@ highlight LeaderTab guifg=#666666
 " 匹配行首tab
 match LeaderTab /^\t/
 
-let g:pydiction_location = '~/.vim/bundle/pydiction/complete-dict'
+" Pydiction
+let g:pydiction_location = '~/.vim/bundle/Pydiction/complete-dict'
+
+" markdown disable folding
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_frontmatter = 1
 
 "source vimrc, 编辑vimrc
 map <silent> <leader>ss :source ~/.vimrc<cr>
 map <silent> <leader>ee :e ~/.vimrc<cr>
+
+
+" guifont
+set guifont=Monospace\ 13
+
+" quick jump between splits
+map <C-J> <C-W>j<C-W>_
+map <C-K> <C-W>k<C-W>_
+
