@@ -209,3 +209,8 @@ set guifont=Monospace\ 13
 map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_
 
+
+" 快速从系统剪切板复制/粘贴
+vmap <leader>y "+y<cr>
+map <leader>p "+p<cr>
+
