@@ -20,7 +20,6 @@ Bundle 'einars/js-beautify'
 Bundle 'godlygeek/tabular'
 Bundle 'plasticboy/vim-markdown'
 
-
 Bundle 'derekwyatt/vim-scala'
 "Bundle 'Valloric/YouCompleteMe'
 
@@ -209,8 +208,13 @@ set guifont=Monospace\ 13
 map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_
 
-
 " 快速从系统剪切板复制/粘贴
 vmap <leader>y "+y<cr>
 map <leader>p "+p<cr>
+
+" gvim和系统剪切板交互
+set clipboard=unnamed
+
+" 快速运行脚本文件
+autocmd FileType python nnoremap <buffer> <leader>r :w<CR>:!python % <CR>
 
