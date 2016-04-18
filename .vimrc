@@ -21,7 +21,7 @@ Bundle 'godlygeek/tabular'
 Bundle 'plasticboy/vim-markdown'
 
 Bundle 'derekwyatt/vim-scala'
-"Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/YouCompleteMe'
 
 " python
 Bundle 'python.vim'
@@ -33,6 +33,8 @@ Bundle 'tpope/vim-surround'
 
 " NERD tree
 Bundle 'The-NERD-tree'
+
+Plugin 'altercation/vim-colors-solarized'
 
 "Set map leader
 let mapleader=","
@@ -116,8 +118,8 @@ set tm=500
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "配色风格 desert darkblue ron
-colorscheme ron
 set background=dark
+colorscheme solarized
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -207,10 +209,6 @@ set guifont=Monospace\ 13
 " quick jump between splits
 map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_
-
-" 快速从系统剪切板复制/粘贴
-vmap <leader>y "+y<cr>
-map <leader>p "+p<cr>
 
 " gvim和系统剪切板交互
 set clipboard=unnamed
