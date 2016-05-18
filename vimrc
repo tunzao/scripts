@@ -44,6 +44,7 @@ syntax on
 
 "显示行号
 set nu
+set relativenumber
 
 "设定行距 GUI 界面中生效
 set linespace=4
