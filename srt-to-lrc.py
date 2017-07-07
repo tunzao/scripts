@@ -10,15 +10,25 @@ def usage():
 
 if __name__ == '__main__':
 
-    lineNum = 0
+    linenum = 0
     t = ""
     sentence = ""
+    out = ''
+    total = 0
+
     for line in fileinput.input(openhook=fileinput.hook_encoded("utf-8")):
-        if lineNum % 4 == 1 :
+        if fileinput.isfirstline():
+            filename = fileinput.filename()
+            print('converting file %s' % filename)
+            out = open(filename[0:len(filename)-3] + "lrc", 'w')
+            total += 1
+
+        if linenum % 4 == 1 :
             t = line[3:11]
             t= t.replace(",",".")
-        elif lineNum % 4 == 2 :
+        elif linenum % 4 == 2 :
             sentence = line
-        elif lineNum % 4 == 3 :
-            print ("[%s]%s" % (t, sentence), end='')
-        lineNum += 1
+        elif linenum % 4 == 3 :
+            out.write("[%s]%s" % (t, sentence))
+        linenum += 1
+    print('converted %d file(s)' % total)
